@@ -1,0 +1,65 @@
+/*================ added by kyle @ shopify ================*/
+
+/*================ Product grid ================*/
+
+.reveal {
+  position: relative;
+
+  span {
+    @include transition(opacity 300ms ease-in-out);
+
+    &:not(.size):not(.size-inner) {
+      display: block;
+    }
+  }
+
+  .hidden {
+    visibility: hidden;
+    font-size: 0px;
+    z-index: -1;
+    top: 0;
+    opacity: 0;
+    @include transition(opacity 300ms ease-in-out);
+  }
+
+  &:hover {
+    .hidden {
+      visibility: visible;
+      z-index: 1;
+      opacity: 1;
+      font-size: $baseFontSize;
+    }
+
+    .grid-product__title {
+      visibility: hidden;
+      opacity: 0;
+      font-size: 0px;
+    }
+
+    .grid-product__price {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .grid-product__option {
+      visibility: hidden;
+      opacity: 0;
+      font-size: 0px;
+    }
+
+    .grid-product__size {
+      visibility: visible;
+      opacity: 1;
+      font-size: $baseFontSize;
+    }
+  }
+}
+.unavailable {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+.grid-product__sold-out {
+  color: $errorRed;
+  font-weight: bold;
+}

@@ -1,0 +1,8 @@
+
+<p style="margin-top: 5px;" class="other-currencies">
+  <span class="js-usd"><script type="text/javascript">var convertEuro=Math.round(Currency.convert(({{ product.price}}/100),"CAD","USD")); document.write("$"+convertEuro+" USD");</script></span> |
+  <span class="js-gbp"><script type="text/javascript">var convertDollar=Math.round(Currency.convert(({{ product.price}}/100),"CAD","GBP")); document.write("&pound;"+convertDollar+" GBP");</script></span> |
+  <span class="js-eur"><script type="text/javascript">var convertEuro=Math.round(Currency.convert(({{ product.price}}/100),"CAD","EUR")); document.write("&euro;"+convertEuro+" EUR");</script> </span> |
+  <span class="js-jpy"><script type="text/javascript">var convertDollar=Math.round(Currency.convert(({{ product.price}}/100),"CAD","JPY")); document.write("&yen;"+convertDollar+" JPY");</script></span>
+</p>
+        

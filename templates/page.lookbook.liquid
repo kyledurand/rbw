@@ -1,0 +1,29 @@
+<!-- /templates/page.liquid -->
+<div class="grid lookbook">
+  <div class="grid__item large--one-full">
+
+    <div class="rte">
+      {{ page.content }}
+    </div>
+
+  </div>
+</div>
+{% comment %}
+
+<script type="text/javascript">
+  $(function() {
+    
+    var $node = $(".grid"),
+        $img = $node.find("img:first");
+    
+    $node.hide();
+    $img.hide();
+    $node.delay(300).fadeIn("slow");
+    $img.delay(300).fadeIn("slow");
+    
+    $(this).find(".previousButton").parent().addClass("clearfix");
+    
+  });
+</script>
+
+{% endcomment %}

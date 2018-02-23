@@ -1,0 +1,78 @@
+<!-- /snippets/product-grid-item.liquid -->
+{% comment %}
+
+  This snippet is used to showcase each product during the loop,
+  'for product in collection.products' in collection.liquid.
+
+  A liquid variable (grid_item_width) is set just before the this
+  snippet is included to change the size of the container.
+  Once the variable is set on a page, all future instances of this
+  snippet will use that width. Overwrite the variable to adjust this.
+
+  Example
+    - assign grid_item_width = 'large--one-quarter medium--one-half'
+
+{% endcomment %}
+
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-quarter medium--one-half small--one-half' %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<div class="grid__item grid-product {{grid_item_width}}{% if sold_out %} is-sold-out{% endif %}">
+  <div class="grid-product__wrapper reveal">
+    <div class="grid-product__image-wrapper">
+      <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
+        <img src="{{ product.featured_image.src | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" class="grid-product__image">
+      </a>
+    </div>
+    {% unless sold_out %}
+    <a href="{{ product.url | within: collection }}" class="grid-product__meta">
+      <span class="grid-product__title grid-product__text">{{ product.title }}</span>
+      <span class="grid-product__price grid-product__text hidden pb-fix{% if on_sale %} on-sale{% endif %}">
+        {% if product.price_varies %}
+          {{ product.price_min | money_without_trailing_zeros }}
+          <span class="icon icon-plus grid-product__price-min" aria-hidden="true"></span>
+        {% else %}
+          {{ product.price | money_without_trailing_zeros }}
+        {% endif %}
+      </span>
+      <span class="grid-product__sizes grid-product__text hidden">
+        {% for variant in product.variants %}
+        {% assign product_option = variant.option2 %}
+        <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
+        {% endfor %}
+      </span>
+      <span class="grid-product__option grid-product__text">
+        {{ product_option }}
+      </span>
+    </a>
+    {% else %}
+    <a href="{{ product.url | within: collection }}" class="grid-product__meta">
+      <span class="grid-product__title grid-product__text">{{ product.title }}</span>
+      <p class="grid-product__sold-out grid-product__text hidden">{{ 'products.product.sold_out' | t }}</p>
+      <span class="grid-product__option grid-product__text">
+        {% for variant in product.variants %}
+        {% assign product_option = variant.option2 %}
+        {% endfor %}
+        {{ product_option }}
+      </span>
+      <span class="grid-product__sizes grid-product__text hidden">
+        {% for variant in product.variants %}
+        {% assign product_option = variant.option2 %}
+        <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
+        {% endfor %}
+      </span>
+    </a>
+    {% endunless %}
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{% unless settings.lockdown_enabled %}
+{% include "product-upper" %}
+{% include "product-lower" %}
+{% else  %}
+<script type="text/javascript">
+  window.location.href = '/';
+</script> 
+{% endunless %}
