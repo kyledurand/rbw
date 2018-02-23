@@ -25,7 +25,14 @@
           Display current variant image, or default first
         {% endcomment %}
         <div class="product-single__photo-wrapper">
-          <img class="product-single__photo" id="ProductPhotoImg" src="{{ featured_image | img_url: 'grande' }}" {% if settings.product_zoom_enable %}data-mfp-src="{{ featured_image | img_url: '1024x1024' }}"{% endif %} alt="{{ featured_image.alt | escape }}">
+          <img
+            class="product-single__photo"
+            id="ProductPhotoImg"
+            src="{{ featured_image | img_url: 'grande' }}"
+            {% if settings.product_zoom_enable %}data-mfp-src="{{ featured_image | img_url: '1024x1024' }}"{% endif %}
+            alt="{{ featured_image.alt | escape }}"
+            data-image-id="{{ featured_image.id }}"
+          >
         </div>
 
         {% comment %}
@@ -34,7 +41,13 @@
         {% for image in product.images %}
           {% unless image contains featured_image %}
             <div class="product-single__photo-wrapper">
-              <img class="product-single__photo" src="{{ image.src | img_url: 'grande' }}" {% if settings.product_zoom_enable %}data-mfp-src="{{ image.src | img_url: '1024x1024' }}"{% endif %} alt="{{ image.alt | escape }}">
+              <img
+                class="product-single__photo"
+                src="{{ image.src | img_url: 'grande' }}"
+                {% if settings.product_zoom_enable %}data-mfp-src="{{ image.src | img_url: '1024x1024' }}"{% endif %}
+                alt="{{ image.alt | escape }}"
+                data-image-id="{{ image.id }}"
+              >
             </div>
           {% endunless %}
         {% endfor %}
@@ -63,9 +76,9 @@
           <span id="ProductPrice" class="product-single__price{% if product.compare_at_price > product.price %} on-sale{% endif %}" itemprop="price">
             {{ current_variant.price | money }}
           </span>
-          
+
           {% include "currencies" %}
-          
+
           <br>
 
           <meta itemprop="priceCurrency" content="{{ shop.currency }}">
@@ -103,7 +116,7 @@
         <div class="product-single__description rte" itemprop="description">
           {{ product.description }}
         </div>
-        
+
         <hr class="hr--small">
 
 

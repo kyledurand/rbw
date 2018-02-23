@@ -68,7 +68,7 @@ assets/slick.min.js.liquid:
 assets/social-buttons.js.liquid:
   development: 2016-03-12T11:01:53-05:00   6e8feb778deb0e3b99a57376e89c6936
 assets/theme.js.liquid:
-  development: 2016-03-12T11:01:53-05:00   957d3e5a7ad23da602abe0325afa73ef
+  development: 2018-02-23T16:42:37-05:00   61122b867c3cf6b372da9eca29e26018
 assets/theme.scss.liquid:
   development: 2016-03-12T14:35:44-05:00   4b8dc31bbfa492e0f98d7a5a984e04ee
 assets/timber.js.liquid:
@@ -136,7 +136,7 @@ snippets/product-grid-item.liquid:
 snippets/product-lower.liquid:
   development: 2016-03-12T12:12:44-05:00   ccc6a638f72a0bc40a2374e2311f48db
 snippets/product-upper.liquid:
-  development: 2016-03-12T12:49:42-05:00   98c60dd7f472e4f9d8baa15a733735d9
+  development: 2018-02-23T16:44:07-05:00   e338abdc73c560ff2452b44e6934d1b0
 snippets/recently-viewed.liquid:
   development: 2016-03-12T12:32:13-05:00   f4c58e81c6aad273cfe70144c3402246
 snippets/respond.liquid:
@@ -178,7 +178,7 @@ templates/customers/reset_password.liquid:
 templates/gift_card.liquid:
   development: 2016-03-12T11:01:54-05:00   0d4dd91296a111afba3860336c61d3ca
 templates/index.liquid:
-  development: 2016-03-12T11:01:54-05:00   a9b9ee97d38bc8d02ac7ed47e0a49c87
+  development: 2018-02-23T16:23:44-05:00   5d6ed72731ce755ffbbfda27b1ca92fe
 templates/list-collections.liquid:
   development: 2016-03-12T11:01:54-05:00   452d24273f8cbf083eabbce8bd4c3f71
 templates/page.contact.liquid:

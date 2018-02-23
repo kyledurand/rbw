@@ -425,7 +425,7 @@ theme.showVariantImage = function (src, imgObject, el) {
   // Called when a new product variant is selected
 
   var $newImage = $('.product-single__photo[data-image-id="'+ imgObject.id +'"]');
-
+  console.log($newImage);
   if (theme.variables.productPageLoad) {
     scrollToImage();
   } else {
@@ -452,7 +452,7 @@ theme.showVariantImage = function (src, imgObject, el) {
           // Move selected variant image to top
           $newImage.parent().prependTo(theme.cache.$productImages);
         } else {
-          // Scroll to variant image
+          console.log('newimage', $newImage);
           $('html, body').animate({
             scrollTop: $newImage.offset().top
           }, 250);
