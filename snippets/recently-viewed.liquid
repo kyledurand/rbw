@@ -5,6 +5,24 @@
   <p>Recently Viewed</p>
 </div>
 
+{% if product.tags contains 'Preview' %}
+{% raw %}
+<script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
+<div id="product-${handle}" class="product">
+  <div class="image">
+    <a href="${url}" class="cy">
+      <img src="${Shopify.Products.resizeImage(featured_image, "medium")}" />
+    </a>
+  </div>
+  <div class="details">
+    <a href="${url}">
+      <span class="title">${title}</span>
+    </a>
+  </div>
+</div>
+</script>
+{% endraw %}
+{% else %}
 {% raw %}
 <script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
 <div id="product-${handle}" class="product">
@@ -22,7 +40,7 @@
 </div>
 </script>
 {% endraw %}
-
+{% endif %}
 <script>
 Shopify.Products.showRecentlyViewed({ howManyToShow: 2 });
 </script>

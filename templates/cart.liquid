@@ -61,10 +61,12 @@
                         {{ item.variant.title }}
                       </p>
                     {% endunless %}
+                    
 
                     {% if settings.product_vendor_enable %}
                       <p class="cart__product-meta">{{ item.vendor }}</p>
                     {% endif %}
+                    
 
                     {% assign property_size = item.properties | size %}
                     {% if property_size > 0 %}

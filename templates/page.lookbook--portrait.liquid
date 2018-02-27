@@ -1,0 +1,43 @@
+<!-- /templates/page.liquid -->
+<div class="grid lookbook lookbook--portrait">
+  <div class="grid__item large--one-full">
+
+    <div class="rte">
+      {{ page.content }}
+    </div>
+
+  </div>
+</div>
+{% comment %}
+
+<script type="text/javascript">
+  $(function() {
+    
+    var $node = $(".grid"),
+        $img = $node.find("img:first");
+    
+    $node.hide();
+    $img.hide();
+    $node.delay(300).fadeIn("slow");
+    $img.delay(300).fadeIn("slow");
+    
+    $(this).find(".previousButton").parent().addClass("clearfix");
+    
+  });
+</script>
+
+<script type="text/javascript">
+  $(function() {   
+    $(document).keyup(function(e) {
+      switch(e.keyCode) { 
+        case 37 : 
+          $('.previousButton').click(); 
+          break;
+        case 39 : 
+          $('.nextButton').click(); 
+          break; 
+      }
+    });
+  });
+</script>
+{% endcomment %}

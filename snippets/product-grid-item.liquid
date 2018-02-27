@@ -29,7 +29,7 @@
 {% endif %}
 
 <div class="grid__item grid-product {{grid_item_width}}{% if sold_out %} is-sold-out{% endif %}">
-  <div class="grid-product__wrapper reveal">
+  <div class="grid-product__wrapper{% unless product.tags contains 'Preview' %} reveal{% endunless %}">
     <div class="grid-product__image-wrapper">
       <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
         <img src="{{ product.featured_image.src | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" class="grid-product__image">
@@ -38,40 +38,56 @@
     {% unless sold_out %}
     <a href="{{ product.url | within: collection }}" class="grid-product__meta">
       <span class="grid-product__title grid-product__text">{{ product.title }}</span>
-      <span class="grid-product__price grid-product__text hidden pb-fix{% if on_sale %} on-sale{% endif %}">
-        {% if product.price_varies %}
-          {{ product.price_min | money_without_trailing_zeros }}
-          <span class="icon icon-plus grid-product__price-min" aria-hidden="true"></span>
+      {% unless product.tags contains 'Preview' %}
+        <span class="grid-product__price grid-product__text hidden pb-fix{% if on_sale %} on-sale{% endif %}">
+          {% if on_sale and settings.preview_mode == false %}
+            <span id="ComparePrice" class="grid-product__price--compare not-block">
+              {{ product.compare_at_price | money_without_trailing_zeros }}
+            </span>
+          {% endif %}
+          {% if product.price_varies %}
+            {{ product.price_min | money_without_trailing_zeros }}
+            <span class="icon icon-plus grid-product__price-min" aria-hidden="true"></span>
+          {% else %}
+          	{{ product.price | money_without_trailing_zeros }}
+          {% endif %}
+        </span>
+        {% if product.tags contains 'coming-soon' %}
+        <span>Coming Soon</span>
         {% else %}
-          {{ product.price | money_without_trailing_zeros }}
+        <span class="grid-product__sizes grid-product__text hidden">
+          {% for variant in product.variants %}
+          {% assign product_option = variant.option2 %}
+          <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner not-block">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
+          {% endfor %}
+        </span>
+        <span class="grid-product__option grid-product__text">
+          {{ product_option }}
+        </span>
         {% endif %}
-      </span>
-      <span class="grid-product__sizes grid-product__text hidden">
-        {% for variant in product.variants %}
-        {% assign product_option = variant.option2 %}
-        <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
-        {% endfor %}
-      </span>
-      <span class="grid-product__option grid-product__text">
-        {{ product_option }}
-      </span>
+      {% endunless %}
     </a>
     {% else %}
     <a href="{{ product.url | within: collection }}" class="grid-product__meta">
       <span class="grid-product__title grid-product__text">{{ product.title }}</span>
-      <p class="grid-product__sold-out grid-product__text hidden">{{ 'products.product.sold_out' | t }}</p>
-      <span class="grid-product__option grid-product__text">
-        {% for variant in product.variants %}
-        {% assign product_option = variant.option2 %}
-        {% endfor %}
-        {{ product_option }}
-      </span>
-      <span class="grid-product__sizes grid-product__text hidden">
-        {% for variant in product.variants %}
-        {% assign product_option = variant.option2 %}
-        <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
-        {% endfor %}
-      </span>
+      <p class="grid-product__sold-out grid-product__text hidden">{% if product.tags contains 'coming-soon'%}Coming Soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</p>
+      {% unless product.tags contains 'Preview' %}
+        {% if product.tags contains 'coming-soon' %}
+      {% else %}
+        <span class="grid-product__option grid-product__text">
+          {% for variant in product.variants %}
+          {% assign product_option = variant.option2 %}
+          {% endfor %}
+          {{ product_option }}
+        </span>
+        <span class="grid-product__sizes grid-product__text hidden">
+          {% for variant in product.variants %}
+          {% assign product_option = variant.option2 %}
+          <span class="size{% unless variant.available %} unavailable{% endunless %}"><span class="size-inner not-block">{% unless variant.option1 contains 'Default' %}{{ variant.option1 }}{% endunless %}</span></span>
+          {% endfor %}
+        </span>
+        {% endif %}
+      {% endunless %}
     </a>
     {% endunless %}
   </div>

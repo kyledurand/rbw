@@ -75,7 +75,7 @@
         </div>
       {% endif %}
     {% endfor %}
-    {% unless settings.lockdown_enabled %}
+    {% unless settings.lockdown_enabled or settings.preview_mode %}
     <button class="section-header text-center featured-products_heading js-index-scroll">
       <h1>{{ 'home_page.sections.featured_products' | t }}</h1>
     </button>

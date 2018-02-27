@@ -14,11 +14,13 @@
 
     {% assign is_reverse_row__product = false %}
     {% assign three_row_index__product = 0 %}
-    {% if collections[settings.home_featured_products].products_count > 50 %}
-      {% assign collection_product_count__product = 50 %}
-    {% else %}
-      {% assign collection_product_count__product = collections[settings.home_featured_products].products_count %}
-    {% endif %}
+  	{% unless settings.preview_mode %}
+      {% if collections[settings.home_featured_products].products_count > 50 %}
+        {% assign collection_product_count__product = 50 %}
+      {% else %}
+        {% assign collection_product_count__product = collections[settings.home_featured_products].products_count %}
+      {% endif %}
+    {% endunless %}
     {% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
 
     {% for product in collections[settings.home_featured_products].products limit: 8 %}

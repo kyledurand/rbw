@@ -43,8 +43,8 @@
     $(this).fadeOut("slow");
     return false;
   });
-
-  $(document).on('scroll', function() {
+  
+  $(document).on( 'scroll', function() {
     var quarter = $(window).height() / 4;
     if ( $(window).scrollTop() > quarter) {
       $(".js-index-scroll").fadeOut("slow");

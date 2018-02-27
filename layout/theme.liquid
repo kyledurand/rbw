@@ -5,7 +5,6 @@
 <!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-
   <!-- Basic page needs ================================================== -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -41,7 +40,7 @@
 
   {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
   {{ 'modernizr.min.js' | asset_url | script_tag }}
-
+  
   {% comment %}
     If you store has customer accounts disabled, you can remove the following JS file
   {% endcomment %}
@@ -56,14 +55,15 @@
 </head>
 
 {% assign lockdown = false %}
-	{% if settings.lockdown_enabled %}
-	{% assign lockdown = true %}
+
+{% if settings.lockdown_enabled %}
+  {% assign lockdown = true %}
 {% endif %}
 
 {% comment %}
   Add the page template as a class for easy page or template specific styling.
 {% endcomment %}
-<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}">
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if settings.preview_mode %} preview-mode{% endif %}">
 
   <div id="NavDrawer" class="drawer drawer--left">
     <div class="drawer__fixed-header">
@@ -96,14 +96,20 @@
               - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
           {% endcomment %}
           {% assign child_list_handle = link.title | handleize %}
-	      {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
+        {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
           {% if linklists[child_list_handle].links != blank %}
             <li class="mobile-nav__item{% unless template == 'index' %}{% if link.active %} mobile-nav__item--active{% endif %}{% endunless %}" aria-haspopup="true">
               <div class="mobile-nav__has-sublist">
                 <a href="{{ link.url }}">
                   <button type="button" class="icon-fallback-text">
                     <span class="mobile-nav__link">
-                      {{ link.title }}
+                      {% if link.title == 'CAD' %}
+                        {{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title }}
+                      {% elsif link.title == 'USD' %}
+                        {{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title }}
+                      {% else %}
+                        {{ link.title }}
+                      {% endif %}
                     </span>
                   </button>
                 </a>
@@ -122,8 +128,14 @@
               </div>
               <ul class="mobile-nav__sublist">
                 {% for childlink in linklists[child_list_handle].links %}
-                  <li class="mobile-nav__item{% unless template == 'index' %}{% if childlink.active %} mobile-nav__item--active{% endif %}{% endunless %}">
-                    <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                  <li class="mobile-nav__item{% unless template == 'index' %}{% if childlink.active %} mobile-nav__item--active{% endif %}{% endunless %}{% if childlink.title == 'CAD' or childlink.title == 'USD' %} mobile-nav__item-flag{% endif %}">
+                    {% if childlink.title == 'CAD' %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                    {% elsif childlink.title == 'USD' %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                    {% else %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ul>
@@ -223,7 +235,7 @@
                   </a>
                   {% if settings.logo_use_inverted %}
                     <a href="{{ shop.url }}" itemprop="url" class="logo--inverted">
-                      <img src="{{ 'logo-inverted.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+                      <img src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
                     </a>
                   {% endif %}
                 {% else %}
@@ -252,24 +264,48 @@
                 </li>
                 {% for link in linklists.main-menu.links %}
                   {% assign child_list_handle = link.title | handleize %}
-	              {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
+                {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
                   {% if linklists[child_list_handle].links != blank %}
                     <li class="site-nav__item site-nav__expanded-item site-nav--has-dropdown{% unless template == 'index' %}{% if link.active %} site-nav--active{% endif %}{% endunless%}" aria-haspopup="true">
+                      {% if link.title == 'CAD' %}
+                        <a href="{{ link.url }}" class="site-nav__link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title }}</a>
+                      {% elsif link.title == 'USD' %}
+                      <a href="{{ link.url }}" class="site-nav__link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title }}</a>
+                      {% else %}
                       <a href="{{ link.url }}" class="site-nav__link test">
                         {{ link.title }}
                         {% comment %}<span class="icon icon-arrow-down" aria-hidden="true"></span>{% endcomment %}
                       </a>
-                      <ul class="site-nav__dropdown text-left">
+                      {% endif %}
+                      <ul class="site-nav__dropdown text-left{% if link.title == 'CAD' or link.title == 'USD' %} flag-list{% endif %}">
                         {% for childlink in linklists[child_list_handle].links %}
-                          <li{% if childlink.active %} class="site-nav--active"{% endif %}>
-                            <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ childlink.title | escape }}</a>
+                          <li class="site-nav--active{% if childlink.title == 'CAD' or childlink.title == 'USD' %} flag{% endif %}">
+                            {% if childlink.title == 'CAD' %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                            {% elsif childlink.title == 'USD' %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                            {% else %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ childlink.title | escape }}</a>
+                            {% endif %}
                           </li>
                         {% endfor %}
                       </ul>
                     </li>
                   {% else %}
                     <li class="site-nav__item site-nav__expanded-item{% unless template == 'index' %}{% if link.active %} site-nav--active{% endif %}{% endunless%}">
-                      <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">{{ link.title }}</a>
+                      {% if link.title == 'CAD' %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title}}
+                        </a>
+                      {% elsif link.title == 'USD' %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title}}
+                        </a>
+                      {% else %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ link.title }}
+                        </a>
+                      {% endif %}
                     </li>
                   {% endif %}
                 {% endunless %}
@@ -364,7 +400,6 @@
       <div class="newsletter">
         <div class="wrapper">
           {% comment %}
-
             MailChimp is the go-to newsletter service for Shopify.
             Use the link below to find your MailChimp "form action"
             and insert it in your site settings.
@@ -572,7 +607,6 @@
           {% comment %}
           <div class="grid__item {{ footer_column_width }} large--text-right">
             {% comment %}<p>&copy; {{ 'now' | date: '%Y' }}, {{ shop.name }}<br>{{ powered_by_link }}</p>{% endcomment %}
-
             {% unless shop.enabled_payment_types == empty %}
               <ul class="inline-list payment-icons">
                 {% for type in shop.enabled_payment_types %}
@@ -588,10 +622,8 @@
           </div>
           {% endcomment %}
         </div>
-
       </div>
     </footer>
-
   </div>
 
 
@@ -642,6 +674,7 @@
   {{ 'handlebars.min.js' | asset_url | script_tag }}
   {% include 'ajax-cart-template' %}
   {{ 'ajax-cart.js' | asset_url | script_tag }}
+
   <script>
     jQuery(function($) {
       ajaxCart.init({
@@ -654,9 +687,7 @@
     });
   </script>
 
-  {% if settings.product_zoom_enable and template contains 'product' %}
-    {{ 'magnific-popup.min.js' | asset_url | script_tag }}
-  {% endif %}
+  {{ 'magnific-popup.min.js' | asset_url | script_tag }}
 
   {% if template contains 'article' or template contains 'product' %}
     {% if settings.social_sharing_blog or settings.social_sharing_products %}
@@ -665,13 +696,13 @@
   {% endif %}
 
   {% if template contains 'product' %}
-
-  <script>
-    Shopify.Products.recordRecentlyViewed();
-  </script>
-
+    <script>
+      if (Shopify.Products) {
+      Shopify.Products.recordRecentlyViewed();
+      }
+    </script>
   {% endif %}
 
-  
+  {% include 'location' %}
 </body>
 </html>
