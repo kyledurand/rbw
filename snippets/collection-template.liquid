@@ -82,7 +82,7 @@
           {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
           {% assign emptyState = true %}
         {% endunless %}
-    
+
         {% include 'onboarding-empty-collection' %}
       {% else %}
         <div class="grid__item text-center">
@@ -99,10 +99,10 @@
     {% assign grid_item_width = 'small--one-half medium--one-half large--one-quarter' %}
     {% for product in collection.products %}
 	  {% if settings.lockdown_enabled and product.type == 'Preview' %}
-        {% include 'product-grid-item' %}
+        {% include 'product-grid-items' %}
       {% else %}
     	{% unless collection.handle == 'all' and product.type == 'Preview' %}
-          {% include 'product-grid-item' %}
+          {% include 'product-grid-items' %}
 	    {% endunless %}
       {% endif %}
     {% else %}

@@ -118,7 +118,7 @@ snippets/collection-grid-collage.liquid:
 snippets/collection-grid-item.liquid:
   development: 2016-03-12T12:48:50-05:00   a041c5b00a9ecacd0f926a49c67f360d
 snippets/collection-template.liquid:
-  development: 2018-02-26T22:21:31-05:00   466d7b71b52e47e03a7b316248675390
+  development: 2018-02-26T22:36:27-05:00   7dbf9472b44237bed683971b1323a50f
 snippets/comment.liquid:
   development: 2016-03-12T11:01:53-05:00   490bf7370ece4d0217f9c229aefd5880
 snippets/currencies.liquid:
@@ -151,10 +151,12 @@ snippets/product-grid-collage.liquid:
   development: 2016-03-12T11:01:54-05:00   a258c7788397701a5db2d51783bfe2d2
 snippets/product-grid-item.liquid:
   development: 2018-02-26T22:21:16-05:00   b589703c1aa96810d2b896e9d7f6ec93
+snippets/product-grid-items.liquid:
+  development: 2018-02-26T22:41:44-05:00   de6cc175f8c24d63e807a1de3438a9ef
 snippets/product-lower.liquid:
   development: 2018-02-26T22:21:11-05:00   900f0b30ca1ba18f6bbe09177743a416
 snippets/product-upper.liquid:
-  development: 2018-02-26T22:21:24-05:00   a47296b7aba3b10444b1b400f4677c5c
+  development: 2018-02-26T22:30:28-05:00   2cbee73d2f89789a1b858a9642b809bc
 snippets/receiptful.liquid:
   development: 2018-02-26T22:21:01-05:00   f9a381ee3727176cc34648482be57ea4
 snippets/receiptfulfeedback.liquid:
