@@ -24,7 +24,11 @@
     {% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
 
     {% for product in collections[settings.home_featured_products].products limit: 8 %}
-      {% include 'product-grid-item' %}
+      {% if product.variants.size > 1 %}
+        {% include 'variant-grid-items' %}
+      {% else %}
+        {% include 'product-grid-item' %}
+      {% endif %}
     {% endfor %}
 
 </div>

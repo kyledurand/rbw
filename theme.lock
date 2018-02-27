@@ -118,7 +118,7 @@ snippets/collection-grid-collage.liquid:
 snippets/collection-grid-item.liquid:
   development: 2016-03-12T12:48:50-05:00   a041c5b00a9ecacd0f926a49c67f360d
 snippets/collection-template.liquid:
-  development: 2018-02-26T22:36:27-05:00   7dbf9472b44237bed683971b1323a50f
+  development: 2018-02-26T23:01:43-05:00   935bef99619f7c990da4b64f32412319
 snippets/comment.liquid:
   development: 2016-03-12T11:01:53-05:00   490bf7370ece4d0217f9c229aefd5880
 snippets/currencies.liquid:
@@ -126,7 +126,7 @@ snippets/currencies.liquid:
 snippets/featured-collections.liquid:
   development: 2016-03-12T11:01:53-05:00   6a12cf7ed063d34052742b7f1d0a11c0
 snippets/featured-products.liquid:
-  development: 2018-02-26T22:21:06-05:00   033726855b0c9651fb7a1b415bcb8a3e
+  development: 2018-02-26T23:04:01-05:00   7ba42019fc3871b69c1cd4f18bc22ed6
 snippets/google-fonts.liquid:
   development: 2016-03-12T11:01:53-05:00   8e40cfa27425f9a5b955b747e1edee96
 snippets/hero.liquid:
@@ -151,8 +151,6 @@ snippets/product-grid-collage.liquid:
   development: 2016-03-12T11:01:54-05:00   a258c7788397701a5db2d51783bfe2d2
 snippets/product-grid-item.liquid:
   development: 2018-02-26T22:21:16-05:00   b589703c1aa96810d2b896e9d7f6ec93
-snippets/product-grid-items.liquid:
-  development: 2018-02-26T22:41:44-05:00   de6cc175f8c24d63e807a1de3438a9ef
 snippets/product-lower.liquid:
   development: 2018-02-26T22:21:11-05:00   900f0b30ca1ba18f6bbe09177743a416
 snippets/product-upper.liquid:
@@ -175,6 +173,8 @@ snippets/social-sharing.liquid:
   development: 2016-03-12T11:01:54-05:00   a976e240eb4c58a088a9dcf8d26ee0c6
 snippets/tags-article.liquid:
   development: 2016-03-12T11:01:54-05:00   4ea88511a917b0e96aba994f1e0c2541
+snippets/variant-grid-items.liquid:
+  development: 2018-02-26T23:01:36-05:00   de6cc175f8c24d63e807a1de3438a9ef
 templates/404.liquid:
   development: 2016-03-12T11:01:54-05:00   f1181b55ee89b4ad79ae81d244761cd2
 templates/article.liquid:
