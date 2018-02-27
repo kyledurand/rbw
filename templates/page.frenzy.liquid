@@ -1,0 +1,91 @@
+<!-- /templates/page.liquid -->
+
+<style>
+body {
+    background-image: url("https://cdn.shopify.com/s/files/1/0188/2850/files/frenzy_5.jpg?2955547961113882113");
+    background-position: center; 
+}
+  p {
+    text-transform: initial;
+    color: #ffffff;
+  }
+  
+    #pxu_cst {
+    width: 320px;
+    margin: auto;
+  }
+  
+  /* unvisited link */
+p a:link {
+    color: white;
+   	text-decoration: none;
+    text-transform: initial;
+
+}
+
+/* visited link */
+p a:visited {
+    color: white;
+    text-decoration: none;
+    text-transform: initial;
+
+
+}
+
+/* mouse over link */
+p a:hover {
+    color: white;
+    text-decoration: none;
+    text-transform: initial;
+}
+
+/* selected link */
+p a:active {
+    color: white;
+  	text-decoration: none;
+    text-transform: initial;
+
+}
+  
+
+</style>
+
+<div class="grid">
+  <div class="grid__item large--one-full">
+    <div class="rte">
+      <p class="page__heading">{{ page.title }}</p>
+      {{ page.content }}
+    </div>
+
+  </div>
+</div>
+
+{% comment %} backup of page template
+
+<!-- /templates/page.liquid -->
+<div class="grid">
+  <div class="grid__item large--five-sixths push--large--one-twelfth">
+
+    {% comment %}<header class="section-header text-center">
+      <h1>{{ page.title }}</h1>
+      <hr class="hr--small">
+    </header>{% endcomment %}
+
+    <div class="grid">
+      <div class="grid__item large--four-fifths push--large--one-tenth">
+        <div class="rte rte--nomargin rte--indented-images">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    $(this).find(".previousButton").parent().addClass("clearfix");
+  });
+</script>
+
+{% endcomment %}

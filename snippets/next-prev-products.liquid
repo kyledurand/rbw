@@ -1,0 +1,25 @@
+{% if collection %}
+{% if collection.previous_product or collection.next_product %}
+  <div class="prev-next-products">
+    {% if collection.previous_product %}
+      {{ 'previous product' | link_to: collection.previous_product }}
+    {% endif %}
+
+    {% if collection.next_product %}
+      {{ 'next product' | link_to: collection.next_product }}
+    {% endif %}
+  </div>
+{% endif %}
+{% endif %}
+
+<style type="text/css">
+  .prev-next-products {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-top: 44px;
+  }
+</style>

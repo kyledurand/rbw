@@ -1,8 +1,13 @@
 {% unless settings.lockdown_enabled %}
-{% include "product-upper" %}
-{% include "product-lower" %}
+  {% include "product-upper" %}
+  {% include "product-lower" %}
 {% else  %}
-<script type="text/javascript">
-  window.location.href = '/';
-</script> 
+  {% unless settings.preview_mode %}
+    <script type="text/javascript">
+      window.location.href = '/';
+    </script> 
+  {% else %}
+	{% include "product-upper" %}
+	{% include "product-lower" %}
+  {% endunless %}
 {% endunless %}

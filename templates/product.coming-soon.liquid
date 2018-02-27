@@ -1,0 +1,14 @@
+{% unless settings.lockdown_enabled %}
+{% include "product-upper" %}
+{% include "product-lower" %}
+{% else  %}
+{% if product.available %}
+{% else %}
+	{% case product.variants.first.inventory_quantity %}
+		{% when -1 %}Coming Soon
+	{% endcase %}
+{% endif %}
+<script type="text/javascript">
+  window.location.href = '/';
+</script> 
+{% endunless %}

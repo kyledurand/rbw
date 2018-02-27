@@ -1,6 +1,6 @@
 <!-- /templates/collection.liquid -->
 {% unless settings.lockdown_enabled %}
-{% include 'collection-template' %}
+  {% include 'collection-template' %}
 {% else %}
 <script type="text/javascript">
   window.location.href = '/';
