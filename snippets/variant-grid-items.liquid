@@ -31,21 +31,23 @@
 {% assign color = '' %}
 
 {% for variant in product.variants %}
+  {% comment %}
   {% for option in variant.options %}
-    {% if product.options[forloop.index0] == 'Color'
-      or product.options[forloop.index0] == 'Colour'
-      or product.options[forloop.index0] == 'color'
-      or product.options[forloop.index0] == 'colour'
-    %}
-      {% assign color_index = forloop.index0 %}
-    {% elsif product.options[forloop.index0] == 'Size'
-      or product.options[forloop.index0] == 'size'
-      or product.options[forloop.index0] == 'Sizes'
-      or product.options[forloop.index0] == 'sizes'
-    %}
-      {% assign size_index = forloop.index0 %}
+    {% if option == 'Red' %}
+      <script type="text/javascript">
+        console.log(`available: {{ variant.available }} option: {{ option }} variant name: {{ variant.option2 }}`);
+      </script>
     {% endif %}
   {% endfor %}
+  {% endcomment %}
+
+  {% if product.options[forloop.index0] == 'Color'
+    or product.options[forloop.index0] == 'Colour'
+    or product.options[forloop.index0] == 'color'
+    or product.options[forloop.index0] == 'colour'
+  %}
+    {% assign color_index = forloop.index0 %}
+  {% endif %}
 
   {% if color_index == 0 %}
     {% assign variant_color = variant.option1 %}
@@ -53,14 +55,6 @@
     {% assign variant_color = variant.option2 %}
   {% elsif color_index == 2 %}
     {% assign variant_color = variant.option3 %}
-  {% endif %}
-
-  {% if size_index == 0 %}
-    {% assign variant_size = variant.option1 %}
-  {% elsif size_index == 1 %}
-    {% assign variant_size = variant.option2 %}
-  {% elsif size_index == 2 %}
-    {% assign variant_size = variant.option3 %}
   {% endif %}
 
   {% unless color == variant_color %}
@@ -97,17 +91,15 @@
               <span>Coming Soon</span>
               {% else %}
               <span class="grid-product__sizes grid-product__text hidden">
-                {% for option in product.options_with_values %}
-                  {% if forloop.index0 < 1 %}
-                    {% for value in option.values %}
-                      <span class="size{% unless variant.available %} unavailable{% endunless %}">
-                        <span class="size-inner not-block">
-                          {% unless value contains 'Default' %}
-                            {{ value }}
-                          {% endunless %}
-                        </span>
+                {% for option in variant.options %}
+                  {% if option == variant_color %}
+                    <span class="size{% unless variant.available %} unavailable{% endunless %}">
+                      <span class="size-inner not-block" data-options="{{ variant.options }}">
+                        {% unless value contains 'Default' %}
+                          {{ variant.option2 }}
+                        {% endunless %}
                       </span>
-                    {% endfor %}
+                    </span>
                   {% endif %}
                 {% endfor %}
               </span>
