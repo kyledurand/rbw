@@ -174,7 +174,7 @@ snippets/social-sharing.liquid:
 snippets/tags-article.liquid:
   development: 2016-03-12T11:01:54-05:00   4ea88511a917b0e96aba994f1e0c2541
 snippets/variant-grid-items.liquid:
-  development: 2018-02-26T23:01:36-05:00   de6cc175f8c24d63e807a1de3438a9ef
+  development: 2018-02-27T22:02:10-05:00   c6330e8cbf4ba02e6da6bfb0a25a689f
 templates/404.liquid:
   development: 2016-03-12T11:01:54-05:00   f1181b55ee89b4ad79ae81d244761cd2
 templates/article.liquid:
@@ -206,7 +206,7 @@ templates/customers/reset_password.liquid:
 templates/gift_card.liquid:
   development: 2016-03-12T11:01:54-05:00   0d4dd91296a111afba3860336c61d3ca
 templates/index.liquid:
-  development: 2018-02-26T22:21:20-05:00   a9b9ee97d38bc8d02ac7ed47e0a49c87
+  development: 2018-02-27T20:48:11-05:00   bf70fa0d97d0316c38d0a230339d6298
 templates/list-collections.liquid:
   development: 2016-03-12T11:01:54-05:00   452d24273f8cbf083eabbce8bd4c3f71
 templates/page.contact.liquid:
