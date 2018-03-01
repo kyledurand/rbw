@@ -91,8 +91,8 @@
               <span>Coming Soon</span>
               {% else %}
               <span class="grid-product__sizes grid-product__text hidden">
-                {% for option in variant.options %}
-                  {% if option == variant_color %}
+                {% for variant in product.variants %}
+                  {% if variant.option1 == variant_color %}
                     <span class="size{% unless variant.available %} unavailable{% endunless %}">
                       <span class="size-inner not-block" data-options="{{ variant.options }}">
                         {% unless value contains 'Default' %}
