@@ -422,6 +422,17 @@ Shopify.OptionSelectors.prototype.updateSelectors = function(index, options) {
   var currValues = this.selectedValues(); // get current values
   var variant = this.product.getVariant(currValues);
 
+  // Disable unavailable variants on change
+  // var option1 = this.product.variants.filter(function(option) {
+  //   return option.option1 === variant.option1;
+  // });
+
+  // $('[data-option="option2"] .single-option-selector__label').each(function(index) {
+  //   option1[index].available ? this.classList.remove('disabled') : this.classList.add('disabled');
+  //   option1[index].available ? this.previousSibling.removeAttribute('disabled') : this.previousSibling.setAttribute('disabled', 'disabled');
+  // });
+
+
   if (variant) {
     this.variantIdField.disabled = false;
     this.variantIdField.value = variant.id; // update hidden selector with new variant id
@@ -526,11 +537,6 @@ Shopify.SingleOptionRadio = function(multiSelector, index, name, values) {
 
     label.htmlFor = radio.id;
     label.innerHTML = values[i];
-
-    if (!this.multiSelector.product.variants[i].available) {
-      $(radio).addClass('disabled').attr('disabled', 'disabled');
-      $(label).addClass('disabled');
-    }
 
     this.element.appendChild(radio);
     this.element.appendChild(label);
