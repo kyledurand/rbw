@@ -703,6 +703,10 @@
     </script>
   {% endif %}
 
-  {% include 'location' %}
+  {% if shop.domain == 'raisedbywolves.ca' %}
+    {% include 'location-ca' %}
+  {% else %}
+    {% include 'location-us' %}
+  {% endif %}
 </body>
 </html>
