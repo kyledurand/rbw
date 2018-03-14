@@ -1,0 +1,89 @@
+<div class="location__container" id="location" style="display: none;">
+
+  <p>Welcome to our new international site</p>
+  
+  <div class="location__buttons">
+    <button class="location__text" onclick="$.magnificPopup.close();">
+      <p>Continue to shop in USD</p>
+    </button>
+    
+    {% comment %}<hr class="location-rule">{% endcomment %}
+    
+    <a class="location--secondary" href="https://raisedbywolves.ca">
+      <p class="type--small">Canadian customers please click here</p>
+    </a>
+  </div>
+</div>
+
+<style type="text/css">
+  .mfp-content {
+    max-width: 350px;
+  }
+  
+  .mfp-close {
+    display: none !important;
+    margin: 6px !important;
+  }
+  
+  .location__text {
+    font-size: 120% !important;
+    font-weight: bold;
+  }
+  
+  .location__container {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 80px 40px 10px 40px;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(150,150,150,1);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(150,150,150,1);
+    box-shadow: 0px 0px 20px 0px rgba(150,150,150,1);
+  }
+  
+  .location__buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  
+  .location-rule {
+    width: 135px;
+    border-top: 1px solid #1a1a1a;
+    margin-bottom: 20px;
+  }
+  
+  .location--secondary {
+    margin-top: 40px;
+  }
+</style>
+
+<script type="text/javascript">
+  var openLocationModal = function() {
+    var $location = $('#location').show();
+
+    $.magnificPopup.open({
+      items: {
+        src: '#location',
+        type: 'inline',
+        showCloseBtn: false,
+        closeOnBgClick: false,
+        closeOnContentClick: false,
+        alignTop: true,
+        removalDelay: 500
+      }
+    });
+  }
+
+  if (localStorage.locationViewed !== 'true') {
+    localStorage.locationViewed = true;
+    
+    openLocationModal();
+  }
+</script>
