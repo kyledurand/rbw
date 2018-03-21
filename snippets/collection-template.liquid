@@ -3,16 +3,26 @@
 {% endcomment %}
 
 {% unless template == 'collection.preview' %}
+  {% assign shopLinks = '' %}
+  {% for shop in linklists.main-menu %}
+    {% assign shopLinks = shop.links %}
+  {% endfor %}
+  <script type="text/javascript">
+    console.log('{{ shopLinks }}');
+  </script> 
   <ul class="text-center">
-    {% for shop in linklists.main-menu.links %}
-      {% for link in shop.links %}
-        <li class="site-nav__link">
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        </li>
-      {% endfor %}
+    {% for link in shopLinks %}
+	  <li class="site-nav__link">
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      </li>
     {% endfor %}
   </ul>
 {% endunless %}
+
+
+<script type="text/javascript">
+  console.log('collection');
+</script> 
 
 {% paginate collection.products by 200 %}
 
