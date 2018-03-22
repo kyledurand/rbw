@@ -1,13 +1,17 @@
 <!-- /templates/product.liquid -->
 
 {% unless product.tags contains 'Preview' %}
-  <ul class="text-center">
-    {% for link in linklists.shop.links %}
-      <li class="site-nav__link">
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+  {% for shop in linklists.main-menu.links %}
+    {% if shop.title == 'Shop' %}
+      <ul class="text-center shop-links">
+        {% for link in shop.links %}
+          <li class="site-nav__link">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endfor %}
 {% endunless %}
 
 <div itemscope itemtype="http://schema.org/Product">
