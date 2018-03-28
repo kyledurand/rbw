@@ -521,7 +521,9 @@ Shopify.SingleOptionRadio = function(multiSelector, index, name, values) {
   this.values = values;
   this.index = index;
   this.name = name;
+  this.variants = this.multiSelector.product.variants;
   this.element = document.createElement('fieldset');
+
 
   for (var i = 0; i < values.length; i++) {
     var radio = document.createElement('input');
@@ -537,6 +539,7 @@ Shopify.SingleOptionRadio = function(multiSelector, index, name, values) {
 
     label.htmlFor = radio.id;
     label.innerHTML = values[i];
+    label.setAttribute('class', this.multiSelector.selectorClass + '__label');
 
     this.element.appendChild(radio);
     this.element.appendChild(label);

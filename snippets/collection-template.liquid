@@ -3,15 +3,17 @@
 {% endcomment %}
 
 {% unless template == 'collection.preview' %}
-  <ul class="text-center">
-    {% for shop in linklists.main-menu.links %}
-      {% for link in shop.links %}
-        <li class="site-nav__link">
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        </li>
-      {% endfor %}
-    {% endfor %}
-  </ul>
+  {% for shop in linklists.main-menu.links %}
+    {% if shop.title == 'Shop' %}
+      <ul class="text-center shop-links">
+        {% for link in shop.links %}
+          <li class="site-nav__link">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endfor %}
 {% endunless %}
 
 {% paginate collection.products by 200 %}

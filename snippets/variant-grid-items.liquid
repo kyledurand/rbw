@@ -95,7 +95,7 @@
                   {% if variant.option1 == variant_color %}
                     <span class="size{% unless variant.available %} unavailable{% endunless %}">
                       <span class="size-inner not-block" data-options="{{ variant.options }}">
-                        {% unless value contains 'Default' %}
+                        {% unless variant.option2 contains 'Default' %}
                           {{ variant.option2 }}
                         {% endunless %}
                       </span>
@@ -121,13 +121,15 @@
               </span>
               <span class="grid-product__sizes grid-product__text hidden">
                 {% for variant in product.variants %}
-                  <span class="size{% unless variant.available %} unavailable{% endunless %}">
-                    <span class="size-inner not-block">
-                      {% unless variant.option1 contains 'Default' %}
-                        {{ variant.option1 }}
-                      {% endunless %}
+                  {% if variant.option1 == variant_color %}
+                    <span class="size{% unless variant.available %} unavailable{% endunless %}">
+                      <span class="size-inner not-block">
+                        {% unless variant.option2 contains 'Default' %}
+                          {{ variant.option2 }}
+                        {% endunless %}
+                      </span>
                     </span>
-                  </span>
+                  {% endif %}
                 {% endfor %}
               </span>
               {% endif %}

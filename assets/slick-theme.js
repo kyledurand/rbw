@@ -76,7 +76,7 @@ var slickTheme = (function(module, $) {
       adaptiveHeight : settings.fullscreen ? false : settings.adaptiveHeight,
       draggable      : false,
       fade           : true,
-      autoplay       : false,
+      autoplay       : true,
       autoplaySpeed  : 5000,
       onInit         : this.onInit,
       onBeforeChange : this.beforeChange,
