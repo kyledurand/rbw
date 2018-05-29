@@ -228,6 +228,7 @@ $max: max-width;
 
 $viewportIncrement: 1px;
 $siteWidth: 2700px;
+$xsmall: 480px;
 $small: 590px;
 $medium: 768px;
 $large: 769px;
@@ -3963,4 +3964,61 @@ button {
 
 .mp-bar-outer  {
   border-radius: 4px !important;
+}
+
+.shop-links {
+  margin: 0;
+}
+
+.sizing {
+  padding: 0 !important;
+
+  .rte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+  }
+
+  table {
+    @include at-query($min, $xsmall) {
+      max-width: 305px;
+    }
+
+    tr {
+      position: relative;
+      display: flex;
+    }
+
+    tbody tr {
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 15px;
+        right: 15px;
+        border-bottom: 1px solid #fff;
+      }
+    }
+
+    td,
+    th {
+      padding: 10px 6px;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    th {
+      flex: 0 0 40%;
+    }
+
+    td {
+      flex: 0 0 15%;
+      display: flex;
+      align-self: center;
+      justify-content: center;
+    }
+  }
 }
