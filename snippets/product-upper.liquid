@@ -71,13 +71,13 @@
 
             {% if product.compare_at_price > product.price and settings.preview_mode == false %}
               <span id="ComparePrice" class="product-single__price--compare-at">
-                {{ product.compare_at_price | money }}
+                {{ product.compare_at_price | money_with_currency  }}
               </span>
             {% endif %}
 
             {% unless product.tags contains 'Preview' %}
               <span id="ProductPrice" class="product-single__price{% if product.compare_at_price > product.price %} on-sale{% endif %}" itemprop="price">
-                {{ current_variant.price | money }}
+                {{ current_variant.price | money_with_currency  }}
               </span>
             {% endunless %}
 

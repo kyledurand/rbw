@@ -69,8 +69,8 @@
                     
 
                     {% assign property_size = item.properties | size %}
-                    <div class='hulkapps-reminder' data-key='{{item.key}}'></div>{% if property_size > 0 %}
-                      {%- comment -%}{% for p in item.properties %}
+                    {% if property_size > 0 %}
+                      {% for p in item.properties %}
                         {% unless p.last == blank %}
                           {{ p.first }}:
 
@@ -82,25 +82,7 @@
 
                           <br>
                         {% endunless %}
-                      {% endfor %}{%- endcomment -%}{%- for p in item.properties -%}
-            {%- unless p.last == blank -%}
-              <li class="product-details__item product-details__item--property{%if property_size == 0%} hide{% endif %}" data-cart-item-property>
-                <span class="product-details__item-label" data-cart-item-property-name>{{ p.first }}: </span>
-
-                {%- comment -%}
-                  Check if there was an uploaded file associated
-                {%- endcomment -%}
-                <span data-cart-item-property-value>
-                  {%- if p.last contains "uploads" -%}
-                    <a href="{{ p.last }}">Uploaded File</a>
-                  {%- else -%}
-                    {{ p.last }}
-                  {%- endif -%}
-                </span>
-              </li>
-            {%- endunless -%}
-          {%- endfor -%}
-            <button type="button" class="edit_cart_option btn btn--primary button" data-product_id="{{item.product_id}}" data-key="{{item.key}}" data-variant_id="{{item.variant_id}}" data-quantity="{{item.quantity}}">Edit Options</button>
+                      {% endfor %}
                     {% endif %}
 
                     <p class="cart__product-meta">
@@ -121,7 +103,7 @@
                   </div>
 
                   <div class="grid__item two-thirds text-right">
-                    <span class="cart__price"><span class='hulkapps-cart-item-line-price' data-key='{{item.key}}'>{{ item.line_price | money }}</span></span>
+                    <span class="cart__price">{{ item.line_price | money }}</span>
                   </div>
 
                 </div>
@@ -152,7 +134,7 @@
                   <p class="cart__subtotal">{{ 'cart.general.subtotal' | t }}</p>
                 </div>
                 <div class="grid__item one-half large--two-thirds">
-                  <p class="cart__subtotal"><span class='hulkapps-cart-original-total'>{{ cart.total_price | money }}</span></p>
+                  <p class="cart__subtotal">{{ cart.total_price | money }}</p>
                 </div>
               </div>
               <p><em>{{ 'cart.general.shipping_at_checkout' | t }}</em></p>

@@ -42,14 +42,14 @@
           <span class="grid-product__price grid-product__text hidden pb-fix{% if on_sale %} on-sale{% endif %}">
             {% if on_sale and settings.preview_mode == false %}
               <span id="ComparePrice" class="grid-product__price--compare not-block">
-                {{ product.compare_at_price | money_without_trailing_zeros }}
+                {{ product.compare_at_price | money_with_currency }} test
               </span>
             {% endif %}
             {% if product.price_varies %}
-              {{ product.price_min | money_without_trailing_zeros }}
+              {{ product.price_min | money_with_currency }}
               <span class="icon icon-plus grid-product__price-min" aria-hidden="true"></span>
             {% else %}
-              {{ product.price | money_without_trailing_zeros }}
+              {{ product.price | money_with_currency }}
             {% endif %}
           </span>
           {% if product.tags contains 'coming-soon' %}

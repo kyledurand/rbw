@@ -1747,10 +1747,6 @@ $socialIconFontStack: 'icons';
   height: 100%;
   padding: 0 0 0 20px;
   color: inherit;
-
-  &:active {
-    background-color: darken($colorDrawers, 5%);
-  }
 }
 
 // Rare use case left close button
@@ -2411,7 +2407,6 @@ $socialIconFontStack: 'icons';
 .mobile-nav__item a,
 .mobile-nav__toggle button {
   color: $colorDrawerText;
-  padding: $gutter / 2;
   text-decoration: none;
 
   &:active {
@@ -2443,20 +2438,25 @@ $socialIconFontStack: 'icons';
 }
 
 .mobile-nav__has-sublist {
-  display: table;
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .mobile-nav__link {
-    display: table-cell;
-    vertical-align: middle;
-    width: 100%;
+    display: flex;
+	align-items: center;
+    min-height: 24px;
   }
 }
 
 .mobile-nav__toggle {
   display: table-cell;
   vertical-align: middle;
-  width: 1%;
+  width: 10px;
+  
+  &.full {
+    width: 100%;
+  }
 }
 
 .mobile-nav__toggle-open {

@@ -23,6 +23,8 @@ table.stockists td {
     color: #9a9a9a;
 }
 
+$flag-width: 20px;
+
 /*================ Variables, theme settings, and Sass mixins from Timber ================*/
 /*============================================================================
   #Sass Mixins
@@ -2438,6 +2440,9 @@ $slick-opacity-not-active: 0.25;
 
 /*================ Nav Links ================*/
 .site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   white-space: nowrap;
 /*   opacity: 0; */
 
@@ -2454,6 +2459,8 @@ $slick-opacity-not-active: 0.25;
 .site-nav__link {
   @include transition('color 0.2s, opacity 0.1s');
   @include accentFontStack;
+  display: flex;
+  align-items: center;
   font-size: em(10px);
   color: #fff !important;
 
@@ -2538,6 +2545,7 @@ $slick-opacity-not-active: 0.25;
   white-space: nowrap;
   padding: 5px 15px;
   font-size: em(16px);
+  color: white;
 }
 
 /*================ Compressed nav if too many links ================*/
@@ -3085,12 +3093,12 @@ button.mfp-arrow {
 /*================ View-specific styles ================*/
 /*================ Templates | Theme Blog ================*/
 .article {
-  margin-bottom: -($gutter / 2);
+  margin-bottom: $gutter / 2;
 }
 
 .article--featured-image {
   display: block;
-  margin-bottom: $gutter;
+  margin-bottom: 20px;
 
   img {
     display: block;
@@ -3241,7 +3249,6 @@ body.js-drawer-open {
 
   li {
     line-height: $header-height / 3;
-    padding-right: $header-height;
 
     a {
       color: white;
@@ -3906,8 +3913,8 @@ button {
 
 .site-nav__link-flag {
   position: relative;
-  top: 2px;
   margin-right: 2px;
+  width: $flag-width;
 }
 
 /*================ Helpers ================*/
@@ -3967,7 +3974,10 @@ button {
 }
 
 .shop-links {
+  display: flex;
+  justify-content: center;
   margin: 0;
+  margin-bottom: 10px;
 }
 
 .sizing {
@@ -4021,4 +4031,176 @@ button {
       justify-content: center;
     }
   }
+}
+
+
+.rte.page__heading {
+  margin-top: 18px;
+}
+
+/*================ Blogs ================*/
+
+.blog *:not(.page__heading):not(.article_tag-link) {  
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 24px;
+}
+  
+.article *:not(.page__heading) {  
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 24px;
+  
+  .date {
+    margin-bottom: 20px !important;
+  }
+  
+  h2, h3, h4, h5, h6 {
+    text-transform: uppercase !important;
+    padding-top: 20px;
+    padding-bottom: 4px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  
+  img {
+	margin: 0 auto;
+    display: block;
+  }
+  
+  p {
+/*     max-width: 440px; */
+/*     margin: 0 auto; */
+  }
+  
+  .tags {
+    text-align: center;
+  }
+}
+
+.blog {	
+  .title a {
+    text-transform: uppercase !important;	
+  }
+  
+  .details {
+    display: flex;
+    justify-content: space-between;
+	margin-bottom: 2px;
+    
+    .title {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  
+  .body {
+    padding: 0 16px;
+  }
+  
+  .small--text-center {
+    text-align: left !important;
+  }
+}
+
+
+.pagination {
+  clear: both;
+  margin-bottom: 30px;
+  font-size: 14px !important;
+}
+
+.return-link {
+  display: block;
+  margin-bottom: 30px;
+  color: red;
+  font-size: 14px !important;
+}
+
+.blog,
+.article {
+	p a {
+      color: red;
+    }
+}
+
+.blog {
+  .details,
+    a,
+	.title {
+    display: block;
+    text-align: center;
+    max-width: 100% !important;
+  }
+}
+
+.article-excerpt {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.article-body {
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-align: center;
+  }
+}
+
+.search-bar--top-bar {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  display: flex;
+  min-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+
+  &.visible {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+
+.search-bar {
+  display: flex;
+  box-shadow: 0 0 10px 1px #00000021;
+  border: 1px solid #e4e4e4;
+  border-top: none;
+  
+  button {
+    display: flex;
+  }
+  
+  input {
+	width: calc(100% - 56px) !important;
+    
+    &:focus {
+      outline: none
+    }
+  }
+}
+
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  
+  img {
+   	width: $flag-width;
+  }
+}
+
+.currency-switcher {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+  padding: 0;
 }

@@ -238,7 +238,7 @@ timber.productPage = function (options) {
       $quantityElements.hide();
     }
 
-    $productPrice.html(Shopify.formatMoney(variant.price, moneyFormat).replace(/((\,00)|(\.00))$/g, '')).show();
+//     $productPrice.html(Shopify.formatMoney(variant.price, moneyFormat).replace(/((\,00)|(\.00))$/g, '')).show();
 
     // Also update and show the product's compare price if necessary
     if (variant.compare_at_price > variant.price) {

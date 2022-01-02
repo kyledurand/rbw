@@ -1,4 +1,4 @@
-<!-- /snippets/product-grid-item.liquid -->
+<!-- /snippets/variant-grid-item.liquid -->
 {% comment %}
 
   This snippet is used to showcase each product during the loop,
@@ -77,14 +77,14 @@
               <span class="grid-product__price grid-product__text hidden pb-fix{% if on_sale %} on-sale{% endif %}">
                 {% if on_sale and settings.preview_mode == false %}
                   <span id="ComparePrice" class="grid-product__price--compare not-block">
-                    {{ variant.compare_at_price | money_without_trailing_zeros }}
+                    {{ variant.compare_at_price | money_with_currency }}
                   </span>
                 {% endif %}
                 {% if variant.price_varies %}
-                  {{ variant.price_min | money_without_trailing_zeros }}
+                  {{ variant.price_min | money_with_currency }}
                   <span class="icon icon-plus grid-product__price-min" aria-hidden="true"></span>
                 {% else %}
-                  {{ variant.price | money_without_trailing_zeros }}
+                  {{ variant.price | money_with_currency }}
                 {% endif %}
               </span>
               {% if product.tags contains 'coming-soon' %}

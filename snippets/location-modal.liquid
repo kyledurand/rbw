@@ -1,0 +1,123 @@
+<div class="location__container" id="location" style="display: none;">
+
+    <h3 class="location__welcome">Welcome to the Raised by Wolves webstore</h3>
+
+    <p class="location__select">Please select your location / currency</p>
+
+    <p class="location__details-shipping">Shipping to:</p>
+
+    <p class="location__details-shopping">Shopping in:</p>
+  
+	<a href="https://raisedbywolves.ca" class="location__link">
+      {{ 'ca.png' | asset_url | img_tag: 'visit raisedbywolves.ca', 'location__flag' }}
+      <p class="location__country">Canada</p>
+      <p class="location__currency">$/CAD</p>
+  	</a>
+  
+	<a href="https://raisedbywolves.us" class="location__link">
+      {{ 'us.png' | asset_url | img_tag: 'visit raisedbywolves.us', 'location__flag' }}
+      <p class="location__country">United States</p>
+      <p class="location__currency">$/USD</p>
+  	</a>
+  
+  	<a href="https://raisedbywolves.eu?currency=EUR" class="location__link">
+      {{ 'eu.png' | asset_url | img_tag: 'visit raisedbywolves.eu', 'location__flag' }}
+      <p class="location__country">Europe</p>
+      <p class="location__currency">€/EUR</p>
+  	</a>
+      
+  	<a href="https://raisedbywolves.eu?currency=GBP" class="location__link">
+      {{ 'uk.png' | asset_url | img_tag: 'visit raisedbywolves.eu', 'location__flag' }}
+      <p class="location__country">United Kingdom</p>
+      <p class="location__currency">£/GBP</p>
+  	</a>
+  
+  	<a href="https://raisedbywolves.us" class="location__link">
+      {{ 'rw.png' | asset_url | img_tag: 'visit raisedbywolves.us', 'location__flag' }}
+      <p class="location__country">Rest of world</p>
+      <p class="location__currency">$/USD</p>
+  	</a>
+</div>
+
+<style type="text/css">
+  .mfp-content {
+    max-width: 480px;
+  }
+  
+  .mfp-close {
+    margin: 6px !important;
+  }
+  
+  .location__container {
+    font-size: 120% !important;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px 0px rgba(150,150,150,1);
+  }
+  
+  .location__container,
+  .location__link {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+    grid-template-columns: 50px 1fr 1fr;
+  }
+  
+  .location__link {
+    grid-column: 1/4;
+  }
+  
+  .location__link:hover {
+	font-weight: 800;
+  }
+  
+  .location__link p {
+	margin-bottom: 0;
+  }
+  
+  .location__welcome {
+	grid-column: 2/4;
+    font-weight: 800;
+  }
+ 
+  .location__select {
+	grid-column: 2/4;
+    font-style: italic;
+  }
+  
+  .location__details-shipping {
+	grid-column: 2;
+    text-decoration: underline;
+  }
+  
+  .location__details-shopping {
+	grid-column: 3;
+    text-decoration: underline;
+  }
+  
+  .location__flag {
+    max-width: 50px;
+    grid-column: 1;
+  }
+</style>
+
+<script type="text/javascript">  
+  if (localStorage.newLocationViewed !== 'true') {  
+    localStorage.newLocationViewed = true;
+
+    $('#location').show();
+
+    $.magnificPopup.open({
+      items: {
+        src: '#location',
+        type: 'inline',
+        showCloseBtn: false,
+        closeOnBgClick: false,
+        closeOnContentClick: false,
+        alignTop: true,
+        removalDelay: 500,
+      },
+    });
+  }
+</script>

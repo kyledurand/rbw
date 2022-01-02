@@ -5,8 +5,6 @@
 <!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-  
-  <meta name="facebook-domain-verification" content="ljxb4ky8zxl9g6ai09bziy172vsk7u" />
   <!-- Basic page needs ================================================== -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -54,7 +52,7 @@
     {{ "/services/javascripts/currencies.js" | script_tag }}
   {% endif %}
   
-{% include 'hulkcode_common' %}{% if template contains 'product' or template contains 'cart' %}<script src='https://volumediscount.hulkapps.com/api/v2/frontend/hulkcode.js' defer='defer'></script>{% endif %}</head>
+</head>
 
 {% assign lockdown = false %}
 
@@ -88,8 +86,103 @@
       {% include 'search-bar', search_btn_style: 'btn--secondary', search_bar_location: 'search-bar--drawer' %}
       {% endcomment %}
 
-      {% include 'mobile-nav' %}
-      
+      <!-- begin mobile-nav -->
+      <ul class="mobile-nav">
+        {% for link in linklists.main-menu.links %}
+          {% comment %}
+            Create a dropdown menu by naming a linklist the same as a link in the parent nav
+
+            More info on dropdowns:
+              - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
+          {% endcomment %}
+          {% assign child_list_handle = link.title | handleize %}
+        {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
+          {% if linklists[child_list_handle].links != blank %}
+            <li class="mobile-nav__item{% unless template == 'index' %}{% if link.active %} mobile-nav__item--active{% endif %}{% endunless %}" aria-haspopup="true">
+              <div class="mobile-nav__has-sublist">
+                <a href="{{ link.url }}">
+                  <button type="button" class="icon-fallback-text">
+                    <span class="mobile-nav__link">
+                      {% if link.title == 'CAD' %}
+                        {{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title }}
+                      {% elsif link.title == 'USD' %}
+                        {{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title }}
+                      {% else %}
+                        {{ link.title }}
+                      {% endif %}
+                    </span>
+                  </button>
+                </a>
+                <div class="mobile-nav__toggle">
+                  <button type="button" class="icon-fallback-text">
+                    <span class="icon-fallback-text mobile-nav__toggle-open">
+                      <span class="icon icon-plus" aria-hidden="true"></span>
+                      <span class="fallback-text">See More</span>
+                    </span>
+                    <span class="icon-fallback-text mobile-nav__toggle-close">
+                      <span class="icon icon-minus" aria-hidden="true"></span>
+                      <span class="fallback-text">{{ 'cart.general.close_cart' | t }}</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <ul class="mobile-nav__sublist">
+                {% for childlink in linklists[child_list_handle].links %}
+                  <li class="mobile-nav__item{% unless template == 'index' %}{% if childlink.active %} mobile-nav__item--active{% endif %}{% endunless %}{% if childlink.title == 'CAD' or childlink.title == 'USD' %} mobile-nav__item-flag{% endif %}">
+                    {% if childlink.title == 'CAD' %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                    {% elsif childlink.title == 'USD' %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                    {% else %}
+                      <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% else %}
+            <li class="mobile-nav__item{% unless template == 'index' %}{% if link.active %} mobile-nav__item--active{% endif %}{% endunless %}">
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endunless %}
+        {% endfor %}
+
+        {% comment %}
+          Spacer element
+        {% endcomment %}
+        <li class="mobile-nav__spacer"></li>
+
+        {% comment %}
+          If customer accounts are enabled, provide login and create account links
+        {% endcomment %}
+        {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+            <li class="mobile-nav__item mobile-nav__item--secondary">
+              <a href="/account">{{ 'layout.customer.account' | t }}</a>
+            </li>
+            <li class="mobile-nav__item mobile-nav__item--secondary">
+              {{ 'layout.customer.log_out' | t | customer_logout_link }}
+            </li>
+          {% else %}
+            <li class="mobile-nav__item mobile-nav__item--secondary">
+              {{ 'layout.customer.log_in' | t | customer_login_link }}
+            </li>
+            {% if shop.customer_accounts_optional %}
+            <li class="mobile-nav__item mobile-nav__item--secondary">
+              {{ 'layout.customer.create_account' | t | customer_register_link }}
+            </li>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+        {% comment %}
+        {% for link in linklists.footer.links %}
+          <li class="mobile-nav__item mobile-nav__item--secondary"><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+        {% endcomment %}
+      </ul>
+      {% include 'search-bar', search_btn_style: 'btn--secondary', search_bar_location: 'search-bar--drawer' %}
+      <!-- //mobile-nav -->
     </div>
   </div>
   <div id="CartDrawer" class="drawer drawer--right{% unless additional_checkout_buttons %} drawer--has-fixed-footer{% endunless %}">
@@ -162,7 +255,117 @@
                 More info on linklists:
                   - http://docs.shopify.com/themes/liquid-variables/linklists
               {% endcomment %}
-              {% include 'main-nav' %}
+              <!-- begin site-nav -->
+              <ul class="site-nav" id="AccessibleNav">
+                <li class="site-nav__item site-nav--compress__menu">
+                  <button type="button" class="icon-fallback-text site-nav__link site-nav__link--icon js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+                    <span class="icon icon-hamburger" aria-hidden="true"></span>
+                    <span class="fallback-text">{{ 'general.drawers.browse' | t }}</span>
+                  </button>
+                </li>
+                {% for link in linklists.main-menu.links %}
+                  {% assign child_list_handle = link.title | handleize %}
+                {% unless lockdown and link.handle == 'shop' or link.handle == 'cart' %}
+                  {% if linklists[child_list_handle].links != blank %}
+                    <li class="site-nav__item site-nav__expanded-item site-nav--has-dropdown{% unless template == 'index' %}{% if link.active %} site-nav--active{% endif %}{% endunless%}" aria-haspopup="true">
+                      {% if link.title == 'CAD' %}
+                        <a href="{{ link.url }}" class="site-nav__link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title }}</a>
+                      {% elsif link.title == 'USD' %}
+                      <a href="{{ link.url }}" class="site-nav__link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title }}</a>
+                      {% else %}
+                      <a href="{{ link.url }}" class="site-nav__link test">
+                        {{ link.title }}
+                        {% comment %}<span class="icon icon-arrow-down" aria-hidden="true"></span>{% endcomment %}
+                      </a>
+                      {% endif %}
+                      <ul class="site-nav__dropdown text-left{% if link.title == 'CAD' or link.title == 'USD' %} flag-list{% endif %}">
+                        {% for childlink in linklists[child_list_handle].links %}
+                          <li class="site-nav--active{% if childlink.title == 'CAD' or childlink.title == 'USD' %} flag{% endif %}">
+                            {% if childlink.title == 'CAD' %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                            {% elsif childlink.title == 'USD' %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ childlink.title }}</a>
+                            {% else %}
+                              <a href="{{ childlink.url }}" class="site-nav__dropdown-link">{{ childlink.title | escape }}</a>
+                            {% endif %}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% else %}
+                    <li class="site-nav__item site-nav__expanded-item{% unless template == 'index' %}{% if link.active %} site-nav--active{% endif %}{% endunless%}">
+                      {% if link.title == 'CAD' %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ 'ca.png' | asset_url | img_tag: 'Shop $CAD', 'site-nav__link-flag' }} {{ link.title}}
+                        </a>
+                      {% elsif link.title == 'USD' %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ 'us.png' | asset_url | img_tag: 'Shop $USD', 'site-nav__link-flag' }} {{ link.title}}
+                        </a>
+                      {% else %}
+                        <a href="{{ link.url }}" class="site-nav__link{% if link.handle == 'cart' %} js-drawer-open-right{% endif %}">
+                          {{ link.title }}
+                        </a>
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% endunless %}
+                {% endfor %}
+                
+                <li class="site-nav__item site-nav__expanded-item">
+                  <button type="button" class="site-nav__link search-toggle">
+                    <span class="icon icon-search" aria-hidden="true"></span>
+                  </button>
+                  {% include 'search-bar', search_btn_style: 'btn--secondary', search_bar_location: 'search-bar--top-bar' %}
+                </li>
+
+                {% comment %}
+                {% if shop.customer_accounts_enabled %}
+                  <li class="site-nav__item site-nav__expanded-item">
+                    <a class="site-nav__link site-nav__link--icon" href="/account">
+                      <span class="icon-fallback-text">
+                        <span class="icon icon-customer" aria-hidden="true"></span>
+                        <span class="fallback-text">
+                          {% if customer %}
+                            {{ 'layout.customer.account' | t }}
+                          {% else %}
+                            {{ 'layout.customer.log_in' | t }}
+                          {% endif %}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                {% endif %}
+                {% endcomment %}
+
+                {% comment %}
+                Uncomment code below to add a search icon that points to the search page.
+                {% endcomment %}
+
+                {% comment %}
+                <li class="site-nav__item">
+                  <a href="/search" class="site-nav__link site-nav__link--icon">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-search" aria-hidden="true"></span>
+                      <span class="fallback-text">{{ 'general.search.title' | t }}</span>
+                    </span>
+                  </a>
+                </li>
+                {% endcomment %}
+                {% comment %}
+                <li class="site-nav__item">
+                  <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-cart" aria-hidden="true"></span>
+                      <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+                    </span>
+                    <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+                  </a>
+                </li>
+                {% endcomment %}
+
+              </ul>
+              <!-- //site-nav -->
             </div>
             <div class="grid__item large--hide one-sixth">
               <div class="site-nav--mobile text-right">
@@ -482,10 +685,6 @@
         moneyFormat: {{ shop.money_format | json }}
       });
     });
-      
-      function changeCurrency(currency) {
-        window.location.replace(`${window.location.origin}${window.location.pathname}?currency=${currency}`)
-      }
   </script>
 
   {{ 'magnific-popup.min.js' | asset_url | script_tag }}
@@ -503,8 +702,11 @@
       }
     </script>
   {% endif %}
-  {% comment %}
-  {% include 'location-modal' %}
-  {% endcomment %}
+
+  {% if shop.domain == 'raisedbywolves.ca' %}
+    {% include 'location-ca' %}
+  {% else %}
+    {% include 'location-us' %}
+  {% endif %}
 </body>
 </html>

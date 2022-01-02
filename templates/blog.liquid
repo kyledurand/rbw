@@ -1,63 +1,92 @@
 <!-- /templates/blog.liquid -->
-{% paginate blog.articles by 5 %}
+{% paginate blog.articles by 20 %}
 
-<div class="grid">
+{% capture capturedTags %}
+  {% for article in blog.articles %}
+    {% for tag in article.tags %}
+      {{ tag | handle }}
+    {% endfor %}
+  {% endfor %}
+{% endcapture %}
 
+{% assign tags = capturedTags | split: ' ' %}
+
+<!-- 
+{% assign unique_tags = tags | uniq %}
+{% if unique_tags.size > 0 %}
+  <ul class="text-center shop-links">
+    {% for tag in unique_tags %}
+      <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="text-link">{{ tag | replace: '-', ' ' | capitalize }}</a>
+    {% endfor %}
+  </ul>
+{% endif %}
+-->
+
+<div class="grid blog">
   <div class="grid__item large--five-sixths push--large--one-twelfth">
-
     <header class="section-header text-center">
-      <h1>
+      <h1 class="page__heading">
         {% if current_tags %}
-          {{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}
+		  {{ current_tags.first }}
         {% else %}
-          {{ blog.title }}
+          Blog
         {% endif %}
-        <a href="{{ shop.url }}{{ blog.url }}.atom" class="icon-fallback-text rss-link">
-          <span class="icon icon-rss" aria-hidden="true"></span>
-          <span class="fallback-text">RSS</span>
-        </a>
       </h1>
-      <hr class="hr--small">
+	  <!--  hard code	 -->
+      <ul class="text-center shop-links">
+        <li class="site-nav__link">
+          <a class="article_tag-link" href="/blogs/news/tagged/product-highlight">Product Highlight</a>
+        </li>
+        <li class="site-nav__link">
+          <a class="article_tag-link" href="/blogs/news/tagged/archives">Archives</a>
+        </li>
+        <li class="site-nav__link">
+          <a class="article_tag-link" href="/blogs/news/tagged/news">News</a>
+        </li>
+      </ul>
     </header>
 
+    <div class="grid-uniform">
     {% for article in blog.articles %}
-      {% assign article_content = article.excerpt_or_content %}
+      {% assign article_content = article.excerpt %}
       {% comment %}
         Scrape article content and pull first image to become featured
         assigns featured_image_src to first images src
         assigns featured_image to image tag containing featured_image_src
         assigns article_content to article_content without the first image
       {% endcomment %}
-      {% if article_content contains '<img' %}
+      {% if article.image.src %}
+	      {% assign featured_image_src = article.image.src %}
+	      {% capture featured_image %}
+		     {{ featured_image_src | img_url: 'large' | img_tag }}
+	      {% endcapture %}  
+      {% elsif article_content contains '<img' %}
         {% assign featured_image_src = article_content | split: 'src="' %}
         {% assign featured_image_src = featured_image_src[1] | split: '"' | first %}
         {% capture featured_image %}
           {% comment %}TODO: can we make sure an 'original' size is never loaded?{% endcomment %}
           {{ featured_image_src | img_tag: article.title }}
         {% endcapture %}
-
         {% assign article_content = article_content | replace: featured_image_src, '' | replace: 'src=""',  'style="display: none;"' %}
       {% else %}
         {% assign featured_image = false %}
       {% endif %}
 
-      <article class="grid small--text-center article">
-
+      <article class="grid__item small--one-whole medium--one-half large--one-third small--text-center article">
         {% if featured_image %}
-          <div class="grid__item">
-            <a class="article--featured-image" href="{{ article.url }}">
-              {{ featured_image }}
-            </a>
-          </div>
+          <a class="article--featured-image" href="{{ article.url }}">
+            {{ featured_image }}
+          </a>
         {% endif %}
 
-        <div class="grid__item large--two-tenths push--large--one-tenth">
-          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}" class="date">{{ article.published_at | date: format: 'month_day_year' }}</time>
-          <hr class="hr--small hr--left small--hide">
-        </div>
-        <div class="grid__item large--six-tenths push--large--one-tenth">
-          <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
-          <div class="rte rte--indented-images">
+        <div class="body">
+          <div class="details">
+            <h3 class="title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+<!--
+<time class="time" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" class="date">{{ article.published_at | date: format: 'month_day_year' }}</time>
+-->
+          </div>
+          <div class="rte rte--indented-images article-excerpt">
             {{ article_content | strip_html | truncatewords: 120 }}
           </div>
 
@@ -65,18 +94,11 @@
             <a href="{{ article.url }}" class="text-link">{{ 'blogs.article.read_more' | t }} &rarr;</a>
           </p>
 
-          {% if article.tags.size > 0 %}
-            <ul class="tags tags--article inline-list">
-              {% include 'tags-article' %}
-            </ul>
-          {% endif %}
-        </div>
+		</div>
       </article>
 
-      {% unless forloop.last %}<hr class="hr--clear">{% endunless %}
-
     {% endfor %}
-
+	<div>
     {% if paginate.pages > 1 %}
       <div class="pagination">
         {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
